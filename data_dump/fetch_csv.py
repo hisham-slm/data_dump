@@ -5,7 +5,7 @@ def fetch_csv(filename: str, columns : list = None, length: int = None):
     data : list = []
     if not os.path.exists(filename):
         raise FileNotFoundError(f'{filename} not found!')
-    with open(filename, 'r') as file:
+    with open(filename, 'r', encoding='utf-8') as file:
         try:
             csv_reader = csv.DictReader(file)
             
@@ -24,7 +24,7 @@ def fetch_csv(filename: str, columns : list = None, length: int = None):
 
             if length is None or length > len(data):
                 length = len(data)
-            data = [tuple(row[key] for key in columns) for row in data]
+            data = [list(row[key] for key in columns) for row in data]
 
             return data[:length]
             
